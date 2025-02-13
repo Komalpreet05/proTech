@@ -1,0 +1,35 @@
+.custom-link {
+  position: relative;
+  font-size: 1rem; /* Equivalent to text-xl */
+  display: inline-block; /* Use inline-block for links */
+  text-decoration: none;
+  padding-bottom: 1px;
+  /* Remove underline */
+}
+
+.custom-link::after {
+  content: "";
+  position: absolute;
+  height: 3px; /* Equivalent to h-[3px] */
+  background-color: #4caf4f; /* Equivalent to bg-black */
+  width: 100%;
+  transform: scaleX(0); /* Equivalent to scale-x-0 */
+  transition: transform 0.2s ease-in-out;
+  bottom: 0;
+  left: 0;
+
+  transform-origin: center; /* Equivalent to transition duration-300 */
+  /* transform-origin: center; Equivalent to origin-center */
+}
+
+.custom-link:hover::after {
+  transform: scaleX(1.1);
+}
+
+.custom-link:hover {
+  /* color: black;  */
+}
+
+.active-link {
+  color: #4caf4f; /* Equivalent to text-black */
+}
