@@ -1,15 +1,5 @@
 {
-  "description": "teach-space",
-  "scripts": {
-    "start": "concurrently \"npm run start:backend\" \"npm run dev:client\"",
-    "start:backend": "cd backend && npm start",
-    "start:frontend": "cd client && npm run dev",
-    "install": "concurrently \"npm run install:backend\" \"npm run install:client\"",
-    "install:backend": "cd backend && npm install",
-    "install:client": "cd client && npm install",
-    "dev": "concurrently \"cd backend && npm start\" \"cd client && npm run dev\"",
-    "clean": "rimraf node_modules **/node_modules"
-  },
+  
   "dependencies": {
     "concurrently": "^9.1.2"
   }
