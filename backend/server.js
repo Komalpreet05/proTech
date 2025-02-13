@@ -20,6 +20,7 @@ import {
 dotenvConfig();
 
 const app = express();
+const port = process.env.PORT || 3000;
 
 app.use(express.json()); // to parse incoming request with JSON payloads
 // app.use(cors());   // to enable CORS
@@ -64,6 +65,10 @@ app.use("/api/subjects", subjectRoutes);
 export default app;
 
 // If you need both local dev and Vercel:
-if (process.env.NODE_ENV !== "production") {
-  app.listen(process.env.PORT || 3000);
-}
+// if (process.env.NODE_ENV !== "production") {
+//   app.listen(process.env.PORT);
+// }
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
