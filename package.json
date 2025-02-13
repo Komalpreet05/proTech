@@ -11,6 +11,7 @@
     "clean": "rimraf node_modules **/node_modules"
   },
   "dependencies": {
-    "concurrently": "^9.1.2"
+    "concurrently": "^9.1.2",
+    "rollup": "^4.34.6"
   }
 }
