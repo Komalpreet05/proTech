@@ -7,7 +7,6 @@ const Login = () => {
   const [isSignUp, setIsSignUp] = useState(false);
   const navigate = useNavigate();
 
-
   const toggleSignUp = () => {
     setIsSignUp(!isSignUp);
   };
@@ -32,7 +31,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        import.meta.env.VITE_BACKEND_URL+"/api/teachers/register",
+        import.meta.env.VITE_BACKEND_URL + "/api/teachers/register",
         { name, email, password, subjects },
         {
           headers: {
@@ -66,7 +65,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        import.meta.env.VITE_BACKEND_URL+"/api/teachers/login",
+        import.meta.env.VITE_BACKEND_URL + "/api/teachers/login",
         { email, password },
         {
           headers: {
@@ -170,16 +169,14 @@ const Login = () => {
             </button>
           </form>
           <div className="text-center mt-6">
-            <a href="http://localhost:4000/auth/google">
+            <a href="https://protech-backend-2y6d.onrender.com/auth/google">
               <button className="bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-400 transition-all w-full">
                 Sign in with Google
               </button>
             </a>
           </div>
           <p className="mt-4 text-center text-gray-600">
-            {isSignUp
-              ? "Already have an account?"
-              : "Don't have an account?"}{" "}
+            {isSignUp ? "Already have an account?" : "Don't have an account?"}{" "}
             <span
               className="text-blue-600 cursor-pointer hover:underline"
               onClick={toggleSignUp}
@@ -195,11 +192,6 @@ const Login = () => {
 
 export default Login;
 
-
-
-
-
-
 // //           {isSignUp
 // //             ? "Already have an account?"
 // //             : "Don't have an account?"}{" "}
@@ -210,14 +202,12 @@ export default Login;
 // //             {isSignUp ? "Sign In" : "Sign Up"}
 // //           </span>
 // //         </p>
-       
+
 // //       </Card>
-
-
 
 // //       </div>
 // //      </>
 // //     );
 // //   };
-  
+
 // //   export default Login;

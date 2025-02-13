@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, Link } from "react-router-dom";
@@ -20,19 +19,19 @@ const Dashboard = () => {
     "Social Skills",
     "Participation",
     "Homework Completion",
-    "Communication Skills"
+    "Communication Skills",
   ];
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const studentResponse = await axios.get(
-          `http://localhost:4000/api/students/getStudents/${teacherName}`
+          `https://protech-backend-2y6d.onrender.com/api/students/getStudents/${teacherName}`
         );
         setStudents(studentResponse.data);
 
         const subjectResponse = await axios.get(
-          `http://localhost:4000/api/subjects/getAllSubjects/${teacherName}`
+          `https://protech-backend-2y6d.onrender.com/api/subjects/getAllSubjects/${teacherName}`
         );
         setSubjects(subjectResponse.data.subjects);
       } catch (error) {
@@ -60,7 +59,7 @@ const Dashboard = () => {
 
     try {
       await axios.post(
-        "http://localhost:4000/api/observations/addObservation",
+        "https://protech-backend-2y6d.onrender.com/api/observations/addObservation",
         data
       );
       alert("Observation saved successfully!");
@@ -94,7 +93,9 @@ const Dashboard = () => {
                 <div
                   key={student._id}
                   className={`flex-shrink-0 w-40 group cursor-pointer transform transition-transform hover:scale-105 ${
-                    selectedStudent === student.name ? "ring-2 ring-blue-500 rounded-xl" : ""
+                    selectedStudent === student.name
+                      ? "ring-2 ring-blue-500 rounded-xl"
+                      : ""
                   }`}
                   onClick={() => setSelectedStudent(student.name)}
                 >
@@ -107,7 +108,9 @@ const Dashboard = () => {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity" />
                   </div>
                   <div className="mt-3 text-center">
-                    <h3 className="font-semibold text-gray-800">{student.name}</h3>
+                    <h3 className="font-semibold text-gray-800">
+                      {student.name}
+                    </h3>
                     <Link
                       to={`/studentprofile/${student.name}`}
                       className="text-blue-500 hover:text-blue-600 text-sm inline-block mt-1"
@@ -207,16 +210,6 @@ const Dashboard = () => {
 
 export default Dashboard;
 
-
-
-
-
-
-
-
-
-
-
 // // before latest
 // import { useState, useEffect } from "react";
 // import axios from "axios";
@@ -260,7 +253,7 @@ export default Dashboard;
 //       alert("Please fill all fields before saving the observation.");
 //       return;
 //     }
-  
+
 //     const data = {
 //       student: selectedStudent,
 //       teacher: teacherName,
@@ -268,7 +261,7 @@ export default Dashboard;
 //       metric: "Behavior", // Replace this with your metric or make it dynamic if needed
 //       observationText: observations,
 //     };
-  
+
 //     try {
 //       const response = await axios.post(
 //         "http://localhost:4000/api/observations/addObservation",
@@ -383,7 +376,6 @@ export default Dashboard;
 // //   // const queryParams = new URLSearchParams(location.search);
 // //   // const teacherName = queryParams.get('teacherName'); // Extract teacherName
 // //   const { teacherName } = useParams();
- 
 
 // //   useEffect(() => {
 // //     const fetchStudents = async () => {
@@ -405,14 +397,14 @@ export default Dashboard;
 // //   return (
 // //     <div className="container mx-auto p-4">
 // //       <h1 className="text-2xl font-semibold mb-4">Dashboard</h1>
-      
+
 // //       {/* Student Carousel */}
 // //       <div className="mb-6">
 // //         <div className="flex overflow-x-auto space-x-6 animate-marquee">
 // //           {students.map(student => (
 // //             <div key={student._id} className="flex-shrink-0 w-32 h-32 text-center">
 // //               <img
-// //                 src={student.picture || kid1} 
+// //                 src={student.picture || kid1}
 // //                 alt={student.name}
 // //                 className="w-full h-full rounded-full object-cover"
 // //               />
@@ -449,7 +441,7 @@ export default Dashboard;
 // //           placeholder="Enter Student's Name"
 // //           className="p-2 border border-gray-300 rounded mb-4 w-full"
 // //         />
-        
+
 // //         <label htmlFor="observation" className="block mb-2">Observation</label>
 // //         <textarea
 // //           id="observation"
