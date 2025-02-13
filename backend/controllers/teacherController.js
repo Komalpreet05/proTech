@@ -1,9 +1,9 @@
 import Teacher from "../models/teacher.js";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import Subject from "../models/subject.js";
 
-const JWT_SECRET = "your-secret-key"; 
+const JWT_SECRET = "your-secret-key";
 // Register a new teacher
 export const registerTeacher = async (req, res) => {
   const { name, email, password, subjects } = req.body;
@@ -20,45 +20,47 @@ export const registerTeacher = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     // Create the new teacher
-    const teacher = new Teacher({ name, email, password: hashedPassword, subjects: [] });
+    const teacher = new Teacher({
+      name,
+      email,
+      password: hashedPassword,
+      subjects: [],
+    });
     await teacher.save();
 
     // Find or create subjects for the teacher
     if (subjects.length > 0) {
-    const subjectIds = [];
-    for (const subjectName of subjects) {
-      // Create a new subject associated with the teacher
-      const subject = new Subject({
-        name: subjectName,
-        teacher: teacher._id, // Associate this subject with the current teacher
-      });
-      await subject.save();
+      const subjectIds = [];
+      for (const subjectName of subjects) {
+        // Create a new subject associated with the teacher
+        const subject = new Subject({
+          name: subjectName,
+          teacher: teacher._id, // Associate this subject with the current teacher
+        });
+        await subject.save();
 
-      // Add the subject ID to the array
-      subjectIds.push(subject._id);
+        // Add the subject ID to the array
+        subjectIds.push(subject._id);
+      }
+
+      // Update the teacher's subjects field with the newly created subjects
+      teacher.subjects = subjectIds;
+      await teacher.save();
     }
-  
-
-    // Update the teacher's subjects field with the newly created subjects
-    teacher.subjects = subjectIds;
-    await teacher.save();
-  }
     // res.status(200).json({ message: "Teacher registered successfully" });
-    res.status(200).json({ 
-      message: "Teacher registered successfully", 
+    res.status(200).json({
+      message: "Teacher registered successfully",
       teacher: {
         _id: teacher._id,
         name: teacher.name,
         email: teacher.email,
-        subjects: teacher.subjects
-      }
+        subjects: teacher.subjects,
+      },
     });
   } catch (error) {
     res.status(500).json({ message: "Server error", error });
   }
 };
-
-
 
 // Get all teachers
 export const getAllTeachers = async (req, res) => {
@@ -93,10 +95,10 @@ export const loginTeacher = async (req, res) => {
 
     // Set token in HTTP-only cookie
     res.cookie("authToken", token, {
-      httpOnly: true,  // Cookie cannot be accessed via JavaScript
-      secure: process.env.NODE_ENV === "production",  // Use HTTPS in production
-      maxAge: 3600 * 1000,  // 1 hour
-      sameSite: "Strict",  // Helps with CSRF protection
+      httpOnly: true, // Cookie cannot be accessed via JavaScript
+      secure: process.env.NODE_ENV === "production", // Use HTTPS in production
+      maxAge: 3600 * 1000, // 1 hour
+      sameSite: "Strict", // Helps with CSRF protection
     });
 
     res.status(200).json({ message: "Login successful", teacher });
@@ -115,7 +117,10 @@ export const updateTeacherSubjects = async (req, res) => {
     }
 
     // Check if the subject already exists for this teacher
-    let subject = await Subject.findOne({ name: subjectName, teacher: teacher._id });
+    let subject = await Subject.findOne({
+      name: subjectName,
+      teacher: teacher._id,
+    });
     if (!subject) {
       // Create a new subject if it doesn't exist
       subject = new Subject({
@@ -131,7 +136,12 @@ export const updateTeacherSubjects = async (req, res) => {
       await teacher.save();
     }
 
-    res.status(200).json({ message: "Subject updated successfully", subjects: teacher.subjects });
+    res
+      .status(200)
+      .json({
+        message: "Subject updated successfully",
+        subjects: teacher.subjects,
+      });
   } catch (error) {
     res.status(500).json({ message: "Server error", error });
   }
