@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+    "start:backend": "cd backend && npm start",
+    "start:frontend": "cd client && npm run dev",
+    "install": "concurrently \"npm run install:backend\" \"npm run install:frontend\"",
+    "install:backend": "cd backend && npm install",
+    "install:frontend": "cd frontend && npm install",
+    "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm start\"",
+    "clean": "rimraf node_modules **/node_modules"
+  },
+  "dependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
